@@ -1,0 +1,98 @@
+[tool.poetry]
+name = "probackuper"
+version = "0.1.0"
+description = ""
+authors = ["Alaamer <ahmedmuhmmed239@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+psutil = ">=5.9.8,<5.10.0"
+tqdm = ">=4.66.2,<4.67.0"
+typer = "^0.12.3"
+rich = "^13.7.1"
+brotli = "^1.1.0"
+mypy = "^1.9.0"
+py7zr = "^0.21.0"
+loguru = "^0.7.2"
+pywin32 = "^306"
+cython = "^3.0.10"
+ruff = "^0.3.7"
+pre-commit = "^3.7.0"
+pylint = "^3.1.0"
+
+[tool.ruff.lint]
+extend-select = [
+#	"E",  # pycodestyle errors
+#	"W",  # pycodestyle warnings
+#	"F",  # pyflakes
+#	"I",  # isort
+#	"C",  # flake8-comprehensions
+#	"B",  # flake8-bugbear
+#	"UP", # pyupgrade
+#	"RUF", # ruff-specific rules
+#	"RET", # flake8-return
+	"C4", # flake8-comprehensions
+	"TCH", # flake8-type-checking
+	"SIM", # flake8-simplify
+#	"YTT", # flake8-2020
+#	"PLW", # pylint-warnings
+#	"TRY" # tryceratops
+]
+[tool.ruff]
+#ignore = ["E501"]
+
+#[tool.pylint.messages]
+#too-few-public-methods = "ignore"
+
+# Exclude a variety of commonly ignored directories.
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".ipynb_checkpoints",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pyenv",
+    ".pytest_cache",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    ".vscode",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "site-packages",
+    "venv",
+]
+
+# Same as Black.
+line-length = 120
+indent-width = 4
+
+[tool.ruff.format]
+# Like Black, use double quotes for strings.
+quote-style = "double"
+
+# Like Black, indent with spaces, rather than tabs.
+indent-style = "tab"
+
+# Like Black, respect magic trailing commas.
+skip-magic-trailing-comma = false
+
+# Like Black, automatically detect the appropriate line ending.
+line-ending = "auto"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

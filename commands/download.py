@@ -1,12 +1,12 @@
-from .strategies.hosts import HostManager
 from commands.handler.base_command import ICommand
+from .strategies.hosts import HostManager
 
 
-class Update(ICommand):
+class Download(ICommand):
 	def __init__(self, src, host: str = "github"):
 		self.src = src
 		self.host = host
 
 	def execute(self):
 		host = HostManager(host=self.host, src=self.src)
-		host.update()
+		host.download()

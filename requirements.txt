@@ -2,3 +2,13 @@ psutil~=5.9.8
 tqdm~=4.66.2
 typer
 rich
+Brotli
+mypy
+py7zr
+loguru
+pywin32
+cython
+typer
+ruff
+pre-commit
+pylint
