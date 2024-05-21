@@ -12,3 +12,8 @@ typer
 ruff
 pre-commit
 pylint
+tox
+mega
+dropbox
+python-dotenv
+rarfile

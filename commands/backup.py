@@ -201,13 +201,18 @@ class Backup(ICommand):
 				return self.__include
 		return DEFAULT_INCLUDED
 
-	@staticmethod
-	def _partition_free_space(partition: str, unit="GB") -> float:
+	def _partition_free_space(self, partition: str, unit="GB") -> float:
 		"""Get the free space of a partition and format it based on the specified unit."""
+		# Check if user provided another destination
+		if self.__dis != ".":
+			partition = os.path.splitdrive(partition)[0]
+
 		if unit not in UNIT_MULTIPLIER:
 			raise ValueError(f"Invalid unit: {unit}")
+
 		try:
 			usage = psutil.disk_usage(partition).free
+
 		except Exception as e:
 			return f"Error: {e}"
 

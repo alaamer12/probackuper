@@ -20,7 +20,7 @@ class LogHandler:
 		"WARNING": "warning",
 		"ERROR": "error",
 		"CRITICAL": "critical",
-		"EXCEPTION": "__exception",
+		"EXCEPTION": "exception",
 		"TRACE": "trace",
 	}
 
@@ -30,16 +30,21 @@ class LogHandler:
 				cls.__instance = super(LogHandler, cls).__new__(cls, *args, **kwargs)
 		return cls.__instance
 
-	def __init__(self, only_file: bool = False):
-		self._setup_logging(only_file=only_file)
+	def __init__(self, only_file: bool = False, dev_mode: bool = True):
+		self._setup_logging()
 		self.__log_file = None
+		self.__only_file = only_file
+		self.__dev_mode = dev_mode
 
-	def _setup_logging(self, only_file: bool = False):
-		if only_file:
+	def _setup_logging(self):
+		format = "{time:YYYY-MM-DD at HH:mm:ss} | <bold>{level}</bold> | {message}"
+		if self.__dev_mode:
+			format = "{time:YYYY-MM-DD at HH:mm:ss} | module {extra[module_name]} | line {extra[lineno]} | function {extra[func_name]} | <bold>{level}</bold> | {message}"
+		if self.__only_file:
 			logger.remove()
 		logger.add(
 			"./logs/file_{time:YYYY-MM-DD}.__log",
-			format="{time:YYYY-MM-DD at HH:mm:ss} | module {extra[module_name]} | line {extra[lineno]} | function {extra[func_name]} | <bold>{level}</bold> | {message}",
+			format=format,
 			rotation="00:00",
 			compression="zip",
 			diagnose=True,
@@ -149,7 +154,9 @@ class LogHandler:
 		log_message: str = message or default_message
 
 		# Binding for customization
-		context_logger = logger.bind(func_name=func_name, module_name=module_name, lineno=line_number)
+		context_logger = logger
+		if self.__dev_mode:
+			context_logger = logger.bind(func_name=func_name, module_name=module_name, lineno=line_number)
 		get_level = self.LEVELS[_level]
 
 		# Log the message
